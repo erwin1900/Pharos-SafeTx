@@ -4,9 +4,9 @@ import { validateSafeTxRequest, ValidationError } from "../src/validation.js";
 
 const validRequest = {
   user_intent: "Transfer 1 USDC to 0x2222222222222222222222222222222222222222",
-  chainId: 1672,
+  chainId: 688689,
   from: "0x146b605c8b371d5b50c3ea560fd1a2081aee7557",
-  to: "0xc879c018db60520f4355c26ed1a6d572cdac1815",
+  to: "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b",
   value: "0x0",
   calldata: "0x"
 };
@@ -20,7 +20,7 @@ test("normalizes valid SafeTx requests", () => {
     }
   });
 
-  assert.equal(request.chainId, 1672);
+  assert.equal(request.chainId, 688689);
   assert.deepEqual(request.trustedSpenders, ["0x4444444444444444444444444444444444444444"]);
   assert.equal(request.addressBook.router, "0x5555555555555555555555555555555555555555");
 });
@@ -29,7 +29,7 @@ test("normalizes policy whitelists and limits", () => {
   const request = validateSafeTxRequest({
     ...validRequest,
     policy: {
-      allowedTargets: ["0xc879c018db60520f4355c26ed1a6d572cdac1815"],
+      allowedTargets: ["0xcfc8330f4bcab529c625d12781b1c19466a9fc8b"],
       allowedRecipients: ["0x2222222222222222222222222222222222222222"],
       allowedSpenders: ["0x5555555555555555555555555555555555555555"],
       maxNativeValue: "0x0",
@@ -39,7 +39,7 @@ test("normalizes policy whitelists and limits", () => {
     }
   });
 
-  assert.deepEqual(request.policy.allowedTargets, ["0xc879c018db60520f4355c26ed1a6d572cdac1815"]);
+  assert.deepEqual(request.policy.allowedTargets, ["0xcfc8330f4bcab529c625d12781b1c19466a9fc8b"]);
   assert.equal(request.policy.maxNativeValue, "0x0");
   assert.equal(request.policy.maxTokenAmounts.usdc, "100");
 });

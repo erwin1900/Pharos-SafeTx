@@ -1,6 +1,6 @@
 import { normalizeAddress, normalizeHex } from "./utils.js";
 
-const SUPPORTED_CHAIN_IDS = new Set([1672, 688688, 688689]);
+const SUPPORTED_CHAIN_IDS = new Set([1672, 688689]);
 
 export class ValidationError extends Error {
   constructor(errors) {

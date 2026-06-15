@@ -1,7 +1,8 @@
 # Transaction Reference
 
-Use this reference for pre-signing SafeTx checks. This is the main workflow for
-deciding whether an agent may sign, must ask the user, or must block.
+Use this reference for SafeTx transaction-payload checks. This is the main
+workflow for deciding whether an agent may continue, must ask the user, or must
+block.
 
 ## Command Template
 
@@ -34,13 +35,13 @@ guardrails in addition to user intent checks.
 ```json
 {
   "policy": {
-    "allowedTargets": ["0xc879c018db60520f4355c26ed1a6d572cdac1815"],
+    "allowedTargets": ["0xcfc8330f4bcab529c625d12781b1c19466a9fc8b"],
     "allowedRecipients": ["0x2222222222222222222222222222222222222222"],
     "allowedSpenders": ["0x5555555555555555555555555555555555555555"],
     "maxNativeValue": "0x0",
     "maxTokenAmounts": {
       "USDC": "50",
-      "0xc879c018db60520f4355c26ed1a6d572cdac1815": "50"
+      "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b": "50"
     }
   }
 }
@@ -58,9 +59,9 @@ guardrails in addition to user intent checks.
 
 | Decision | Agent action |
 | --- | --- |
-| `ALLOW` | Continue only if the user session permits autonomous signing. |
+| `ALLOW` | Continue only if the user session permits autonomous execution. |
 | `WARN` | Pause and ask for explicit user confirmation. |
-| `BLOCK` | Do not sign or submit. Regenerate the transaction or use `safer_alternative`. |
+| `BLOCK` | Stop execution handoff. Regenerate the transaction or use `safer_alternative`. |
 
 ## Language / Prompt Output
 
@@ -80,12 +81,12 @@ Set `language` to control SafeTx user-facing prompts:
 
 ## Write Operation Pre-checks
 
-Before any downstream signer receives a transaction:
+Before any downstream execution component receives a transaction:
 
-1. Confirm the exact `to`, `value`, and `calldata` match the transaction to be signed.
-2. Confirm `chainId` matches the user intent and the signer network.
-3. Confirm no private key, seed phrase, or auth token appears in the request JSON.
-4. Run SafeTx immediately before signing.
+1. Confirm the exact `to`, `value`, and `calldata` match the prepared transaction payload.
+2. Confirm `chainId` matches the user intent and the execution network.
+3. Confirm no secret material or auth token appears in the request JSON.
+4. Run SafeTx immediately before downstream execution handoff.
 5. Enforce the returned decision without weakening it.
 
 ## Error Handling
@@ -96,7 +97,7 @@ Before any downstream signer receives a transaction:
 | `calldata must be valid hex` | Malformed calldata | Rebuild from ABI or transaction builder. |
 | `UNEXPECTED_CHAIN` | Chain id outside configured Pharos networks | Confirm network using `assets/networks.json`. |
 | `INFINITE_APPROVAL` | Max ERC20 allowance | Replace with limited approval. |
-| `UNKNOWN_CALLDATA` | Selector is not decoded | Decode ABI before signing or block. |
+| `UNKNOWN_CALLDATA` | Selector is not decoded | Decode ABI before execution handoff or block. |
 | `POLICY_TARGET_NOT_ALLOWED` | Transaction target not whitelisted | Add the target to policy or regenerate the transaction. |
 | `POLICY_RECIPIENT_NOT_ALLOWED` | Decoded recipient not whitelisted | Confirm the intended recipient and update policy only if approved. |
 | `POLICY_SPENDER_NOT_ALLOWED` | Approval spender not whitelisted | Use an allowed router/spender or ask for explicit policy update. |
@@ -104,7 +105,7 @@ Before any downstream signer receives a transaction:
 
 ## Agent Guidelines
 
-1. Never sign from inside SafeTx.
+1. Never execute transactions from inside SafeTx.
 2. Show `reasons[]` to the user for `WARN` and `BLOCK`.
 3. Prefer limited approvals over unlimited approvals.
 4. Treat `ALLOW` as a policy result, not a protocol audit guarantee.

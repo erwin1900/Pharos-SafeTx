@@ -52,17 +52,16 @@ Expected behavior:
 - Decision is `BLOCK`
 - Findings include `PERMIT2_APPROVE_SELECTOR`
 
-## 5. Verify portable interfaces
+## 5. Verify the portable CLI interface
 
 ```text
-Use Pharos SafeTx to verify its CLI and MCP interfaces.
+Use Pharos SafeTx to verify its CLI interface.
 ```
 
 Expected behavior:
 
 - Agent runs a CLI example
-- Agent runs MCP `tools/list`
-- MCP tool list includes `pharos_safetx_analyze_transaction`
+- CLI output includes a SafeTx `decision`
 
 ## 6. Analyze a pasted transaction object
 
@@ -70,14 +69,14 @@ Expected behavior:
 Use Pharos SafeTx to check this transaction before signing:
 {
   "user_intent": "Transfer 100 USDC to 0x2222222222222222222222222222222222222222",
-  "chainId": 1672,
+  "chainId": 688689,
   "from": "0x146b605c8b371d5b50c3ea560fd1a2081aee7557",
-  "to": "0xc879c018db60520f4355c26ed1a6d572cdac1815",
+  "to": "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b",
   "value": "0x0",
   "calldata": "0xa9059cbb00000000000000000000000022222222222222222222222222222222222222220000000000000000000000000000000000000000000000000000000005f5e100",
   "tokenDecimals": {
     "USDC": 6,
-    "0xc879c018db60520f4355c26ed1a6d572cdac1815": 6
+    "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b": 6
   }
 }
 ```

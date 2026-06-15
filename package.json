@@ -10,9 +10,6 @@
     "analyze": "node src/cli.js analyze",
     "init": "node src/cli.js init",
     "demo:skill": "node scripts/demo-skill-scenario.js",
-    "demo:txbuilder": "node scripts/demo-txbuilder-simulation.js",
-    "http": "node adapters/http-server.js",
-    "mcp": "node src/mcp-server.js",
     "prereq": "node scripts/check-prereqs.js",
     "test": "node --test"
   },
@@ -20,7 +17,6 @@
     "pharos",
     "realfi",
     "ai-agent",
-    "mcp",
     "web3",
     "transaction-security",
     "skill"

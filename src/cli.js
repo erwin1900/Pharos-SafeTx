@@ -41,7 +41,7 @@ Usage:
 
 Commands:
   analyze   Analyze a proposed transaction and return ALLOW / WARN / BLOCK.
-  init      Generate local deployment packages for agent / GPT skill targets.
+  init      Generate the local Codex Skill package.
 
 Init targets:
   ${getInitTargets().join(", ")}

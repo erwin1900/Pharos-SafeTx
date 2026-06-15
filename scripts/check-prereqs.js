@@ -12,7 +12,7 @@ const checks = [
     command: process.execPath,
     args: ["--version"],
     required: true,
-    reason: "required for SafeTx CLI, demo, MCP, and HTTP adapters",
+    reason: "required for SafeTx CLI, demo, and Skill package generation",
     minMajor: MIN_NODE_MAJOR,
     install: installNode
   },

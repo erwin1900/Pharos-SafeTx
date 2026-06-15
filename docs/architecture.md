@@ -42,21 +42,17 @@ last-mile decision before signing.
 | Module | Responsibility |
 | ------ | -------------- |
 | `src/cli.js` | CLI entry point for examples and local demos. |
-| `src/initDeploy.js` | Generates local deployment packages for Codex, ChatGPT, MCP, Claude, and Cursor. |
-| `src/mcp-server.js` | Newline-delimited JSON-RPC stdio server exposing SafeTx tools. |
-| `adapters/http-server.js` | HTTP adapter for platforms that do not support MCP. |
+| `src/initDeploy.js` | Generates the local Codex Skill package. |
 | `skill.json` | Platform-neutral Skill manifest. |
 | `schemas/` | JSON Schema contracts for request and result payloads. |
 | `SKILL.md` | Pharos Skill Engine-style agent entry point and Capability Index. |
 | `references/query.md` | Read-only explanation, metadata, and output parsing guidance. |
 | `references/transaction.md` | Main pre-signing transaction decision workflow. |
 | `references/contract.md` | ERC20, selector, ABI, and unknown-contract guidance. |
-| `references/script-gen.md` | JS/TS/Python integration template guidance. |
-| `references/safetx.md` | Legacy consolidated operation instructions and demo/interface checks. |
+| `references/safetx.md` | Consolidated operation instructions and demo/interface checks. |
 | `assets/networks.json` | Pharos network metadata. |
 | `assets/tokens.json` | Token metadata for examples and policy context. |
 | `assets/risk-selectors.json` | Data-driven high-attention selector list. |
-| `assets/templates/` | Script generation templates for read and pre-write SafeTx handoffs. |
 | `assets/erc20/StandardERC20.sol` | ERC20 ABI reference asset, not a deployment target. |
 | `demo/test-prompts.md` | Natural-language prompts for testing SafeTx in agent runtimes. |
 | `src/validation.js` | Request shape, address, chain id, and hex validation. |

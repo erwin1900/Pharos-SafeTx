@@ -12,7 +12,7 @@ const ACTION_PATTERNS = [
   ["repay", /\b(repay|repayment|还款|偿还)\b/i]
 ];
 
-const TOKEN_PATTERN = /\b(USDC|USDT|WETH|ETH|PHRS|PROS|DAI|WBTC|BTC|NFT)\b/i;
+const TOKEN_PATTERN = /\b(USDC|USDT|WPHRS|WPROS|WETH|ETH|PHRS|PROS|DAI|WBTC|BTC|NFT)\b/i;
 const AMOUNT_PATTERN = /(?:\b|^)(\d+(?:\.\d+)?)\s*([A-Za-z][A-Za-z0-9]{1,12})?/;
 
 /**

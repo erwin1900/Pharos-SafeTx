@@ -1,3 +1,0 @@
-display_name: Pharos SafeTx
-short_description: Run local SafeTx transaction safety checks and Skill-mode demos.
-default_prompt: Use pharos-safetx skill mode to run the SafeTx demo and summarize the ALLOW/WARN/BLOCK decision.

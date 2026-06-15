@@ -1,5 +1,8 @@
 node_modules/
 coverage/
+artifacts/
+dist/
+codex-skill/
 .DS_Store
 .env
 .idea/

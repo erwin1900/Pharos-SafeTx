@@ -13,9 +13,9 @@ function loadExample(name) {
 function baseRequest() {
   return {
     user_intent: "Transfer 1 USDC",
-    chainId: 1672,
+    chainId: 688689,
     from: "0x146b605c8b371d5b50c3ea560fd1a2081aee7557",
-    to: "0xc879c018db60520f4355c26ed1a6d572cdac1815",
+    to: "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b",
     value: "0x0",
     calldata: "0x"
   };
@@ -115,11 +115,11 @@ test("monitors lending borrow methods as high-attention RealFi actions", () => {
 });
 
 test("compares ERC20 base units with intent amounts when token decimals are provided", () => {
-  const token = "0xc879c018db60520f4355c26ed1a6d572cdac1815";
+  const token = "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b";
   const recipient = "0x2222222222222222222222222222222222222222";
   const result = analyzeTransaction({
     user_intent: `Transfer 100 USDC to ${recipient}`,
-    chainId: 1672,
+    chainId: 688689,
     from: "0x146b605c8b371d5b50c3ea560fd1a2081aee7557",
     to: token,
     value: "0x0",
@@ -135,11 +135,11 @@ test("compares ERC20 base units with intent amounts when token decimals are prov
 });
 
 test("flags ERC20 base-unit amounts that exceed decimal-normalized user intent", () => {
-  const token = "0xc879c018db60520f4355c26ed1a6d572cdac1815";
+  const token = "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b";
   const recipient = "0x2222222222222222222222222222222222222222";
   const result = analyzeTransaction({
     user_intent: `Transfer 100 USDC to ${recipient}`,
-    chainId: 1672,
+    chainId: 688689,
     from: "0x146b605c8b371d5b50c3ea560fd1a2081aee7557",
     to: token,
     value: "0x0",
@@ -169,7 +169,7 @@ test("blocks recipients outside the configured policy whitelist", () => {
   const result = analyzeTransaction({
     ...loadExample("allow-transfer.json"),
     policy: {
-      allowedTargets: ["0xc879c018db60520f4355c26ed1a6d572cdac1815"],
+      allowedTargets: ["0xcfc8330f4bcab529c625d12781b1c19466a9fc8b"],
       allowedRecipients: ["0x7777777777777777777777777777777777777777"]
     }
   });
@@ -195,14 +195,14 @@ test("blocks token amounts over the configured policy limit", () => {
 test("blocks approval spenders outside the configured policy whitelist", () => {
   const result = analyzeTransaction({
     user_intent: "Approve 10 USDC for the router on Pharos",
-    chainId: 1672,
+    chainId: 688689,
     from: "0x146b605c8b371d5b50c3ea560fd1a2081aee7557",
-    to: "0xc879c018db60520f4355c26ed1a6d572cdac1815",
+    to: "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b",
     value: "0x0",
     calldata: encodeApprove("0x4444444444444444444444444444444444444444", 10000000n),
     tokenDecimals: {
       USDC: 6,
-      "0xc879c018db60520f4355c26ed1a6d572cdac1815": 6
+      "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b": 6
     },
     policy: {
       allowedSpenders: ["0x5555555555555555555555555555555555555555"]

@@ -68,11 +68,9 @@ Show that SafeTx is portable:
 
 ```bash
 npm run analyze -- examples/warn-infinite-approval.json
-npm run mcp
-npm run http
 ```
 
 Close with:
 
 > SafeTx is a transaction pre-signing firewall for AI agents. It works through
-> SKILL.md, JSON Schema, CLI, MCP, and HTTP adapters.
+> SKILL.md, JSON Schema, and the local CLI.
