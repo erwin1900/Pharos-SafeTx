@@ -101,15 +101,7 @@ export function decodeTransaction(request) {
   }
 
   if (SELECTORS[selector]) {
-    return {
-      kind: "known_call",
-      selector,
-      functionName: SELECTORS[selector],
-      args: {
-        contract: request.to,
-        value: bigIntToString(value)
-      }
-    };
+    return decodeKnownCall(selector, request, data, value) || knownCall(selector, request, value);
   }
 
   return {
@@ -121,4 +113,281 @@ export function decodeTransaction(request) {
       value: bigIntToString(value)
     }
   };
+}
+
+function decodeKnownCall(selector, request, data, value) {
+  if (selector === "0x38ed1739") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        amount: uintString(data, 0),
+        minimumReceived: uintString(data, 1),
+        ...decodePath(data, 2),
+        recipient: addressAt(data, 3),
+        deadline: uintString(data, 4)
+      })
+    );
+  }
+
+  if (selector === "0x8803dbee") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        expectedOutput: uintString(data, 0),
+        amount: uintString(data, 1),
+        ...decodePath(data, 2),
+        recipient: addressAt(data, 3),
+        deadline: uintString(data, 4)
+      })
+    );
+  }
+
+  if (selector === "0x7ff36ab5") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        minimumReceived: uintString(data, 0),
+        ...decodePath(data, 1),
+        recipient: addressAt(data, 2),
+        deadline: uintString(data, 3)
+      })
+    );
+  }
+
+  if (selector === "0x18cbafe5") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        amount: uintString(data, 0),
+        minimumReceived: uintString(data, 1),
+        ...decodePath(data, 2),
+        recipient: addressAt(data, 3),
+        deadline: uintString(data, 4)
+      })
+    );
+  }
+
+  if (selector === "0x4a25d94a") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        expectedOutput: uintString(data, 0),
+        amount: uintString(data, 1),
+        ...decodePath(data, 2),
+        recipient: addressAt(data, 3),
+        deadline: uintString(data, 4)
+      })
+    );
+  }
+
+  if (selector === "0xfb3bdb41") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        expectedOutput: uintString(data, 0),
+        ...decodePath(data, 1),
+        recipient: addressAt(data, 2),
+        deadline: uintString(data, 3)
+      })
+    );
+  }
+
+  if (selector === "0x414bf389") {
+    return tryDecode(() => decodeExactInputSingle(selector, request, data, value));
+  }
+
+  if (selector === "0xdb3e2198") {
+    return tryDecode(() => decodeExactOutputSingle(selector, request, data, value));
+  }
+
+  if (selector === "0xc04b8d59") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        recipient: addressAt(data, 1),
+        deadline: uintString(data, 2),
+        amount: uintString(data, 3),
+        minimumReceived: uintString(data, 4)
+      })
+    );
+  }
+
+  if (selector === "0xf28c0498") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        recipient: addressAt(data, 1),
+        deadline: uintString(data, 2),
+        expectedOutput: uintString(data, 3),
+        amount: uintString(data, 4)
+      })
+    );
+  }
+
+  if (selector === "0xb6b55f25") {
+    return tryDecode(() => knownCall(selector, request, value, { amount: uintString(data, 0) }));
+  }
+
+  if (selector === "0x6e553f65") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        amount: uintString(data, 0),
+        recipient: addressAt(data, 1)
+      })
+    );
+  }
+
+  if (selector === "0x2e1a7d4d") {
+    return tryDecode(() => knownCall(selector, request, value, { amount: uintString(data, 0) }));
+  }
+
+  if (selector === "0xb460af94") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        amount: uintString(data, 0),
+        recipient: addressAt(data, 1),
+        owner: addressAt(data, 2)
+      })
+    );
+  }
+
+  if (selector === "0xba087652") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        amount: uintString(data, 0),
+        recipient: addressAt(data, 1),
+        owner: addressAt(data, 2)
+      })
+    );
+  }
+
+  if (selector === "0xa694fc3a") {
+    return tryDecode(() => knownCall(selector, request, value, { amount: uintString(data, 0) }));
+  }
+
+  if (selector === "0x617ba037") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        token: addressAt(data, 0),
+        amount: uintString(data, 1),
+        recipient: addressAt(data, 2),
+        referralCode: uintString(data, 3)
+      })
+    );
+  }
+
+  if (selector === "0x69328dec") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        token: addressAt(data, 0),
+        amount: uintString(data, 1),
+        recipient: addressAt(data, 2)
+      })
+    );
+  }
+
+  if (selector === "0xa415bcad") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        token: addressAt(data, 0),
+        amount: uintString(data, 1),
+        rateMode: uintString(data, 2),
+        referralCode: uintString(data, 3),
+        recipient: addressAt(data, 4)
+      })
+    );
+  }
+
+  if (selector === "0x573ade81") {
+    return tryDecode(() =>
+      knownCall(selector, request, value, {
+        token: addressAt(data, 0),
+        amount: uintString(data, 1),
+        rateMode: uintString(data, 2),
+        recipient: addressAt(data, 3)
+      })
+    );
+  }
+
+  return null;
+}
+
+function knownCall(selector, request, value, args = {}) {
+  return {
+    kind: "known_call",
+    selector,
+    functionName: SELECTORS[selector],
+    args: {
+      contract: request.to,
+      value: bigIntToString(value),
+      ...args
+    }
+  };
+}
+
+function tryDecode(decode) {
+  try {
+    return decode();
+  } catch {
+    return null;
+  }
+}
+
+function addressAt(data, index) {
+  return addressFromWord(wordAt(data, index));
+}
+
+function uintString(data, index) {
+  return bigIntToString(uintFromWord(wordAt(data, index)));
+}
+
+function decodePath(data, offsetWordIndex) {
+  const addresses = addressArrayAt(data, offsetWordIndex);
+  const result = {
+    path: addresses.join(" -> ")
+  };
+  if (addresses[0]) result.token = addresses[0];
+  if (addresses[addresses.length - 1]) result.outputToken = addresses[addresses.length - 1];
+  return result;
+}
+
+function addressArrayAt(data, offsetWordIndex) {
+  const offset = uintFromWord(wordAt(data, offsetWordIndex));
+  if (offset % 32n !== 0n) throw new Error("ABI dynamic array offset is not word-aligned");
+
+  const lengthWordIndex = Number(offset / 32n);
+  if (!Number.isSafeInteger(lengthWordIndex)) throw new Error("ABI dynamic array offset is too large");
+
+  const length = Number(uintFromWord(wordAt(data, lengthWordIndex)));
+  if (!Number.isSafeInteger(length)) throw new Error("ABI dynamic array length is too large");
+
+  const addresses = [];
+  for (let index = 0; index < length; index += 1) {
+    addresses.push(addressAt(data, lengthWordIndex + 1 + index));
+  }
+  return addresses;
+}
+
+function decodeExactInputSingle(selector, request, data, value) {
+  const hasDeadline = wordCount(data) >= 8;
+  return knownCall(selector, request, value, {
+    token: addressAt(data, 0),
+    outputToken: addressAt(data, 1),
+    fee: uintString(data, 2),
+    recipient: addressAt(data, 3),
+    ...(hasDeadline ? { deadline: uintString(data, 4) } : {}),
+    amount: uintString(data, hasDeadline ? 5 : 4),
+    minimumReceived: uintString(data, hasDeadline ? 6 : 5),
+    sqrtPriceLimitX96: uintString(data, hasDeadline ? 7 : 6)
+  });
+}
+
+function decodeExactOutputSingle(selector, request, data, value) {
+  const hasDeadline = wordCount(data) >= 8;
+  return knownCall(selector, request, value, {
+    token: addressAt(data, 0),
+    outputToken: addressAt(data, 1),
+    fee: uintString(data, 2),
+    recipient: addressAt(data, 3),
+    ...(hasDeadline ? { deadline: uintString(data, 4) } : {}),
+    expectedOutput: uintString(data, hasDeadline ? 5 : 4),
+    amount: uintString(data, hasDeadline ? 6 : 5),
+    sqrtPriceLimitX96: uintString(data, hasDeadline ? 7 : 6)
+  });
+}
+
+function wordCount(data) {
+  return Math.floor((data.length - 10) / 64);
 }

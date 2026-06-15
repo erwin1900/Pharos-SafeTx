@@ -1,15 +1,15 @@
 import { extractAddresses } from "./utils.js";
 
 const ACTION_PATTERNS = [
-  ["swap", /\b(swap|exchange|trade|兑换|交换)\b/i],
-  ["approve", /\b(approve|approval|authorize|allowance|授权)\b/i],
-  ["transfer", /\b(transfer|send|pay|发送|转账|付款)\b/i],
-  ["stake", /\b(stake|staking|质押)\b/i],
-  ["claim", /\b(claim|reward|get reward|领取|申领|奖励)\b/i],
-  ["deposit", /\b(deposit|supply|lend|存入|存款|供应|借出)\b/i],
-  ["withdraw", /\b(withdraw|redeem|unstake|取出|赎回|提现吗?)\b/i],
-  ["borrow", /\b(borrow|loan|借款|借贷)\b/i],
-  ["repay", /\b(repay|repayment|还款|偿还)\b/i]
+  ["swap", /(?:\b(?:swap|exchange|trade)\b|兑换|交换)/i],
+  ["approve", /(?:\b(?:approve|approval|authorize|allowance)\b|授权)/i],
+  ["transfer", /(?:\b(?:transfer|send|pay)\b|发送|转账|付款)/i],
+  ["stake", /(?:\b(?:stake|staking)\b|质押)/i],
+  ["claim", /(?:\b(?:claim|reward|get reward)\b|领取|申领|奖励)/i],
+  ["deposit", /(?:\b(?:deposit|supply|lend)\b|存入|存款|供应|借出)/i],
+  ["withdraw", /(?:\b(?:withdraw|redeem|unstake)\b|取出|赎回|提现吗?)/i],
+  ["borrow", /(?:\b(?:borrow|loan)\b|借款|借贷)/i],
+  ["repay", /(?:\b(?:repay|repayment)\b|还款|偿还)/i]
 ];
 
 const TOKEN_PATTERN = /\b(USDC|USDT|WPHRS|WPROS|WETH|ETH|PHRS|PROS|DAI|WBTC|BTC|NFT)\b/i;

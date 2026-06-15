@@ -42,7 +42,6 @@ last-mile decision before signing.
 | Module | Responsibility |
 | ------ | -------------- |
 | `src/cli.js` | CLI entry point for examples and local demos. |
-| `src/initDeploy.js` | Generates the local Codex Skill package. |
 | `skill.json` | Platform-neutral Skill manifest. |
 | `schemas/` | JSON Schema contracts for request and result payloads. |
 | `SKILL.md` | Pharos Skill Engine-style agent entry point and Capability Index. |

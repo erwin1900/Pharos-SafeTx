@@ -1,38 +1,17 @@
 # API Reference
 
-Pharos SafeTx now exposes a local CLI-oriented Skill surface. The request and
-response shapes are shared by the CLI, examples, JSON Schemas, and generated
-Codex Skill package.
+Pharos SafeTx exposes a local CLI-oriented Skill surface. The request and
+response shapes are shared by the CLI, examples, and JSON Schemas.
 
 ## CLI
 
 ```bash
 npm run analyze -- examples/warn-infinite-approval.json
 cat examples/allow-transfer.json | node src/cli.js analyze
-npm run init -- --target all
 ```
 
 For Pharos Skill Engine-style operation instructions, see
 `references/safetx.md`.
-
-## Init Command
-
-Use `init` to generate the local Codex Skill package:
-
-```bash
-node src/cli.js init --target all --out dist/agent-deploy
-```
-
-Supported targets:
-
-| Target | Generated package |
-| ------ | ----------------- |
-| `codex` | `SKILL.md` wrapper and install instructions. |
-| `all` | Alias for `codex`. |
-
-This command is local-only. It writes files under the requested output
-directory and does not install globally, upload, sign, submit, or publish
-anything.
 
 ## Request
 

@@ -86,6 +86,42 @@ test("monitors DEX swap execution methods before signing", () => {
   assert.ok(result.findings.some((finding) => finding.code === "SWAP_EXACT_TOKENS_FOR_TOKENS_SELECTOR"));
 });
 
+test("decodes swap recipients and amounts for policy checks", () => {
+  const tokenIn = "0xcfc8330f4bcab529c625d12781b1c19466a9fc8b";
+  const tokenOut = "0x838800b758277cc111b2d48ab01e5e164f8e9471";
+  const recipient = "0x2222222222222222222222222222222222222222";
+  const result = analyzeTransaction({
+    ...baseRequest(),
+    user_intent: `Swap 10 USDC to PHRS for ${recipient}`,
+    to: "0x1111111111111111111111111111111111111111",
+    calldata: encodeSwapExactTokensForTokens({
+      amountIn: 10000000n,
+      amountOutMin: 1n,
+      path: [tokenIn, tokenOut],
+      recipient,
+      deadline: 2000000000n
+    }),
+    tokenDecimals: {
+      USDC: 6,
+      [tokenIn]: 6
+    },
+    policy: {
+      allowedRecipients: ["0x7777777777777777777777777777777777777777"],
+      maxTokenAmounts: {
+        USDC: "5"
+      }
+    }
+  });
+
+  assert.equal(result.decision, "BLOCK");
+  assert.equal(result.transaction.args.recipient, recipient);
+  assert.equal(result.transaction.args.amount, "10000000");
+  assert.equal(result.transaction.args.token, tokenIn);
+  assert.ok(result.transaction.args.path.includes(tokenOut));
+  assert.ok(result.findings.some((finding) => finding.code === "POLICY_RECIPIENT_NOT_ALLOWED"));
+  assert.ok(result.findings.some((finding) => finding.code === "POLICY_TOKEN_LIMIT_EXCEEDED"));
+});
+
 test("monitors vault deposit methods", () => {
   const result = analyzeTransaction({
     ...baseRequest(),
@@ -244,4 +280,26 @@ function encodeTransfer(recipient, amount) {
 
 function encodeApprove(spender, amount) {
   return `0x095ea7b3${spender.slice(2).padStart(64, "0")}${amount.toString(16).padStart(64, "0")}`;
+}
+
+function encodeSwapExactTokensForTokens({ amountIn, amountOutMin, path, recipient, deadline }) {
+  const pathOffset = 5n * 32n;
+  return [
+    "0x38ed1739",
+    encodeUint(amountIn),
+    encodeUint(amountOutMin),
+    encodeUint(pathOffset),
+    encodeAddress(recipient),
+    encodeUint(deadline),
+    encodeUint(BigInt(path.length)),
+    ...path.map(encodeAddress)
+  ].join("");
+}
+
+function encodeAddress(address) {
+  return address.slice(2).padStart(64, "0");
+}
+
+function encodeUint(value) {
+  return BigInt(value).toString(16).padStart(64, "0");
 }

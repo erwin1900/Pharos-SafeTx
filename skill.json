@@ -26,14 +26,6 @@
     "cli": {
       "command": "npm run analyze -- <request.json>",
       "example": "npm run analyze -- examples/warn-infinite-approval.json"
-    },
-    "init": {
-      "command": "npm run init -- --target <target>",
-      "targets": [
-        "all",
-        "codex"
-      ],
-      "output": "dist/agent-deploy"
     }
   },
   "decisions": {

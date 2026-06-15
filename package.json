@@ -8,7 +8,6 @@
   },
   "scripts": {
     "analyze": "node src/cli.js analyze",
-    "init": "node src/cli.js init",
     "demo:skill": "node scripts/demo-skill-scenario.js",
     "prereq": "node scripts/check-prereqs.js",
     "test": "node --test"

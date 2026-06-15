@@ -81,12 +81,6 @@ Pipe a request through stdin:
 cat examples/allow-transfer.json | node src/cli.js analyze
 ```
 
-Generate a local Codex Skill package:
-
-```bash
-npm run init -- --target codex
-```
-
 Run the bundled Skill demo:
 
 ```bash
@@ -249,9 +243,8 @@ pharos-safetx/
   test/
 ```
 
-Generated output directories such as `dist/`, `artifacts/`, and `codex-skill/`
-are ignored. The root [SKILL.md](SKILL.md) is the single source of truth for
-Skill instructions.
+The root [SKILL.md](SKILL.md) is the single source of truth for Skill
+instructions.
 
 ## Architecture
 
@@ -279,7 +272,6 @@ Core modules:
 | `src/decoder.js` | EVM calldata decoder. |
 | `src/riskEngine.js` | Finding generation, scoring, and final decision. |
 | `src/i18n.js` | English, Chinese, and bilingual output. |
-| `src/initDeploy.js` | Local Codex Skill package generation. |
 
 ## Security Notes
 
@@ -306,7 +298,6 @@ The test suite covers:
 - RealFi selector monitoring
 - policy allowlists and limits
 - Chinese and bilingual output
-- Codex Skill package generation
 - token parsing for WPHRS and WPROS
 
 Current expected result:
