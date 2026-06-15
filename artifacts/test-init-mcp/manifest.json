@@ -1,0 +1,12 @@
+{
+  "name": "pharos-safetx",
+  "generatedAt": "2026-06-15T10:55:12.438Z",
+  "outputDir": "artifacts/test-init-mcp",
+  "targets": [
+    "mcp"
+  ],
+  "files": [
+    "artifacts/test-init-mcp/mcp/mcp-server.json",
+    "artifacts/test-init-mcp/mcp/README.md"
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharos-safetx.local/schemas/safetx-request.schema.json",
+  "title": "SafeTxRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["user_intent", "chainId", "from", "to"],
+  "properties": {
+    "user_intent": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Natural-language instruction the agent is trying to satisfy."
+    },
+    "chainId": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Target EVM chain id."
+    },
+    "from": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$",
+      "description": "Wallet or agent address initiating the transaction."
+    },
+    "to": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$",
+      "description": "Transaction target contract or recipient."
+    },
+    "value": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]+$",
+      "default": "0x0",
+      "description": "Native value as an EVM hex quantity."
+    },
+    "calldata": {
+      "type": "string",
+      "pattern": "^0x([a-fA-F0-9]{2})*$",
+      "default": "0x",
+      "description": "Transaction calldata as byte-aligned hex."
+    },
+    "language": {
+      "type": "string",
+      "enum": ["en", "zh", "zh-CN", "bilingual"],
+      "default": "en",
+      "description": "Output language for findings, reasons, agent action, and safer alternative."
+    },
+    "trustedSpenders": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]{40}$"
+      },
+      "default": []
+    },
+    "blockedAddresses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]{40}$"
+      },
+      "default": []
+    },
+    "addressBook": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]{40}$"
+      },
+      "default": {}
+    },
+    "tokenDecimals": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 36
+      },
+      "default": {},
+      "description": "Optional token decimals by symbol or token address, used to compare human intent amounts with ERC20 base-unit calldata."
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional per-request agent policy for whitelists and transaction limits.",
+      "properties": {
+        "allowedTargets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$"
+          },
+          "default": []
+        },
+        "allowedRecipients": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$"
+          },
+          "default": []
+        },
+        "allowedSpenders": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$"
+          },
+          "default": []
+        },
+        "maxNativeValue": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]+$",
+          "description": "Maximum native token value as an EVM hex quantity."
+        },
+        "maxTokenAmounts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^\\d+(\\.\\d+)?$"
+          },
+          "description": "Maximum token amounts by symbol or token address, expressed in human units when tokenDecimals is provided."
+        }
+      }
+    }
+  }
+}

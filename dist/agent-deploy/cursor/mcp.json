@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "pharos-safetx": {
+      "command": "node",
+      "args": [
+        "/Users/liuyanwen/Documents/Pharos SafeTx/src/mcp-server.js"
+      ]
+    }
+  }
+}

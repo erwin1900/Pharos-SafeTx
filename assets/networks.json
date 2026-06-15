@@ -1,0 +1,34 @@
+{
+  "version": "0.1.0",
+  "description": "Pharos network metadata used by Pharos SafeTx. SafeTx is read-only and pre-signing, so RPC fields are informational unless a downstream adapter performs live chain reads.",
+  "networks": [
+    {
+      "name": "pacific-mainnet",
+      "displayName": "Pharos Pacific Mainnet",
+      "chainId": 1672,
+      "rpcUrl": "https://rpc.pharos.xyz",
+      "explorerUrl": "https://pharosscan.xyz",
+      "nativeToken": "PROS",
+      "isTestnet": false,
+      "default": true
+    },
+    {
+      "name": "atlantic-testnet",
+      "displayName": "Pharos Atlantic Testnet",
+      "chainId": 688689,
+      "rpcUrl": "https://atlantic.dplabs-internal.com",
+      "explorerUrl": "https://atlantic.pharosscan.com",
+      "nativeToken": "PHRS",
+      "isTestnet": true
+    },
+    {
+      "name": "atlantic-testnet-legacy",
+      "displayName": "Pharos Atlantic Testnet (Legacy Compatibility)",
+      "chainId": 688688,
+      "rpcUrl": "https://atlantic.dplabs-internal.com",
+      "explorerUrl": "https://atlantic.pharosscan.com",
+      "nativeToken": "PHRS",
+      "isTestnet": true
+    }
+  ]
+}

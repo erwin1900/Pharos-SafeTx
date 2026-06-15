@@ -1,0 +1,19 @@
+{
+  "user_intent": "Swap 10 USDC to PHRS on Pharos",
+  "chainId": 1672,
+  "from": "0x146b605c8b371d5b50c3ea560fd1a2081aee7557",
+  "to": "0xc879c018db60520f4355c26ed1a6d572cdac1815",
+  "value": "0x0",
+  "calldata": "0x095ea7b30000000000000000000000004444444444444444444444444444444444444444ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "trustedSpenders": [
+    "0x5555555555555555555555555555555555555555"
+  ],
+  "tokenDecimals": {
+    "USDC": 6,
+    "0xc879c018db60520f4355c26ed1a6d572cdac1815": 6
+  },
+  "addressBook": {
+    "USDC": "0xc879c018db60520f4355c26ed1a6d572cdac1815",
+    "verifiedRouter": "0x5555555555555555555555555555555555555555"
+  }
+}

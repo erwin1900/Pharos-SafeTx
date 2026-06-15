@@ -1,0 +1,12 @@
+{
+  "name": "pharos-safetx",
+  "generatedAt": "2026-06-15T10:55:12.431Z",
+  "outputDir": "artifacts/test-init-codex",
+  "targets": [
+    "codex"
+  ],
+  "files": [
+    "artifacts/test-init-codex/codex/pharos-safetx/SKILL.md",
+    "artifacts/test-init-codex/codex/pharos-safetx/INSTALL.md"
+  ]
+}

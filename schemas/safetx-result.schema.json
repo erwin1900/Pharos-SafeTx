@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharos-safetx.local/schemas/safetx-result.schema.json",
+  "title": "SafeTxResult",
+  "type": "object",
+  "required": [
+    "decision",
+    "risk_score",
+    "intent",
+    "transaction",
+    "findings",
+    "reasons",
+    "agent_action",
+    "safer_alternative"
+  ],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": ["ALLOW", "WARN", "BLOCK"]
+    },
+    "risk_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "intent": {
+      "type": "object"
+    },
+    "transaction": {
+      "type": "object"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "code", "message", "score"],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "score": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "agent_action": {
+      "type": "string"
+    },
+    "safer_alternative": {
+      "type": "string"
+    }
+  }
+}

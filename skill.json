@@ -1,0 +1,67 @@
+{
+  "name": "pharos-safetx",
+  "version": "0.1.0",
+  "description": "Portable AI x RealFi pre-signing transaction firewall Skill for AI agents before signing Pharos/EVM transactions.",
+  "license": "MIT",
+  "runtime": {
+    "node": ">=20"
+  },
+  "schemas": {
+    "request": "schemas/safetx-request.schema.json",
+    "result": "schemas/safetx-result.schema.json"
+  },
+  "assets": {
+    "networks": "assets/networks.json",
+    "tokens": "assets/tokens.json",
+    "riskSelectors": "assets/risk-selectors.json",
+    "erc20Reference": "assets/erc20/StandardERC20.sol",
+    "templates": "assets/templates"
+  },
+  "references": {
+    "query": "references/query.md",
+    "transaction": "references/transaction.md",
+    "contract": "references/contract.md",
+    "scriptGeneration": "references/script-gen.md",
+    "safetx": "references/safetx.md"
+  },
+  "interfaces": {
+    "cli": {
+      "command": "npm run analyze -- <request.json>",
+      "example": "npm run analyze -- examples/warn-infinite-approval.json"
+    },
+    "init": {
+      "command": "npm run init -- --target <target>",
+      "targets": [
+        "all",
+        "codex",
+        "chatgpt",
+        "mcp",
+        "claude",
+        "cursor"
+      ],
+      "output": "dist/agent-deploy"
+    },
+    "mcp": {
+      "command": "node src/mcp-server.js",
+      "tools": [
+        "pharos_safetx_analyze_transaction",
+        "pharos_safetx_explain_risk",
+        "pharos_safetx_suggest_safe_action"
+      ]
+    },
+    "http": {
+      "command": "npm run http",
+      "endpoints": {
+        "health": "GET /health",
+        "analyze": "POST /analyze",
+        "explain": "POST /explain",
+        "suggest": "POST /suggest"
+      }
+    }
+  },
+  "decisions": {
+    "ALLOW": "The agent may proceed if the user session permits autonomous signing.",
+    "WARN": "The agent should pause and ask the user for explicit confirmation.",
+    "BLOCK": "The agent must not sign or submit the transaction."
+  }
+}

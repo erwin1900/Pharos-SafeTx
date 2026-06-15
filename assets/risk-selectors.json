@@ -1,0 +1,263 @@
+{
+  "version": "0.1.0",
+  "lastUpdated": "2026-06-15",
+  "description": "Monitored and high-attention EVM selectors SafeTx should flag before an AI agent signs a RealFi transaction. A match is not always malicious, but it requires stronger intent alignment and user confirmation.",
+  "selectors": [
+    {
+      "selector": "0xa9059cbb",
+      "name": "ERC20 transfer(address,uint256)",
+      "severity": "low",
+      "code": "ERC20_TRANSFER_SELECTOR",
+      "category": "payment",
+      "recommendation": "Confirm recipient, token, amount, and policy limits before signing."
+    },
+    {
+      "selector": "0x095ea7b3",
+      "name": "ERC20 approve(address,uint256)",
+      "severity": "medium",
+      "code": "ERC20_APPROVAL_SELECTOR",
+      "category": "approval",
+      "recommendation": "Confirm spender and amount. Prefer limited approvals over unlimited approvals."
+    },
+    {
+      "selector": "0x23b872dd",
+      "name": "ERC20 transferFrom(address,address,uint256)",
+      "severity": "medium",
+      "code": "ERC20_TRANSFER_FROM_SELECTOR",
+      "category": "payment",
+      "recommendation": "Confirm owner, recipient, allowance source, and amount before signing."
+    },
+    {
+      "selector": "0xd505accf",
+      "name": "ERC2612 permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+      "severity": "high",
+      "code": "ERC2612_PERMIT_SELECTOR",
+      "category": "approval",
+      "recommendation": "Treat as off-chain approval. Confirm the owner, spender, value, and deadline before signing."
+    },
+    {
+      "selector": "0x87517c45",
+      "name": "Permit2 approve(address,address,uint160,uint48)",
+      "severity": "high",
+      "code": "PERMIT2_APPROVE_SELECTOR",
+      "category": "approval",
+      "recommendation": "Verify token, spender, amount, and expiration. Permit2 approvals are frequently abused by phishing flows."
+    },
+    {
+      "selector": "0x39509351",
+      "name": "increaseAllowance(address,uint256)",
+      "severity": "medium",
+      "code": "INCREASE_ALLOWANCE_SELECTOR",
+      "category": "approval",
+      "recommendation": "Verify this is expected. Unknown allowance increases should be treated as suspicious."
+    },
+    {
+      "selector": "0xa22cb465",
+      "name": "setApprovalForAll(address,bool)",
+      "severity": "high",
+      "code": "NFT_OPERATOR_APPROVAL_SELECTOR",
+      "category": "approval",
+      "recommendation": "Confirm the operator and collection. This can grant control over all NFTs in a collection."
+    },
+    {
+      "selector": "0x38ed1739",
+      "name": "swapExactTokensForTokens(uint256,uint256,address[],address,uint256)",
+      "severity": "high",
+      "code": "SWAP_EXACT_TOKENS_FOR_TOKENS_SELECTOR",
+      "category": "swap",
+      "recommendation": "Confirm router, token path, recipient, amountOutMin, slippage, and deadline before signing."
+    },
+    {
+      "selector": "0x8803dbee",
+      "name": "swapTokensForExactTokens(uint256,uint256,address[],address,uint256)",
+      "severity": "high",
+      "code": "SWAP_TOKENS_FOR_EXACT_TOKENS_SELECTOR",
+      "category": "swap",
+      "recommendation": "Confirm maximum input, token path, recipient, slippage, and deadline before signing."
+    },
+    {
+      "selector": "0x7ff36ab5",
+      "name": "swapExactETHForTokens(uint256,address[],address,uint256)",
+      "severity": "high",
+      "code": "SWAP_EXACT_ETH_FOR_TOKENS_SELECTOR",
+      "category": "swap",
+      "recommendation": "Confirm native value, token path, recipient, amountOutMin, slippage, and deadline before signing."
+    },
+    {
+      "selector": "0x18cbafe5",
+      "name": "swapExactTokensForETH(uint256,uint256,address[],address,uint256)",
+      "severity": "high",
+      "code": "SWAP_EXACT_TOKENS_FOR_ETH_SELECTOR",
+      "category": "swap",
+      "recommendation": "Confirm token input, PHRS output path, recipient, amountOutMin, slippage, and deadline before signing."
+    },
+    {
+      "selector": "0x4a25d94a",
+      "name": "swapTokensForExactETH(uint256,uint256,address[],address,uint256)",
+      "severity": "high",
+      "code": "SWAP_TOKENS_FOR_EXACT_ETH_SELECTOR",
+      "category": "swap",
+      "recommendation": "Confirm maximum token input, native output target, recipient, slippage, and deadline before signing."
+    },
+    {
+      "selector": "0xfb3bdb41",
+      "name": "swapETHForExactTokens(uint256,address[],address,uint256)",
+      "severity": "high",
+      "code": "SWAP_ETH_FOR_EXACT_TOKENS_SELECTOR",
+      "category": "swap",
+      "recommendation": "Confirm native value, exact output target, token path, recipient, and deadline before signing."
+    },
+    {
+      "selector": "0x414bf389",
+      "name": "exactInputSingle((address,address,uint24,address,uint256,uint256,uint160))",
+      "severity": "high",
+      "code": "UNISWAP_V3_EXACT_INPUT_SINGLE_SELECTOR",
+      "category": "swap",
+      "recommendation": "Confirm tokenIn, tokenOut, fee tier, recipient, amountIn, amountOutMinimum, and sqrtPriceLimit before signing."
+    },
+    {
+      "selector": "0xc04b8d59",
+      "name": "exactInput(bytes,address,uint256,uint256)",
+      "severity": "high",
+      "code": "UNISWAP_V3_EXACT_INPUT_SELECTOR",
+      "category": "swap",
+      "recommendation": "Decode the path bytes and confirm route, recipient, amountIn, and amountOutMinimum before signing."
+    },
+    {
+      "selector": "0xdb3e2198",
+      "name": "exactOutputSingle((address,address,uint24,address,uint256,uint256,uint160))",
+      "severity": "high",
+      "code": "UNISWAP_V3_EXACT_OUTPUT_SINGLE_SELECTOR",
+      "category": "swap",
+      "recommendation": "Confirm tokenIn, tokenOut, fee tier, recipient, exact output, maximum input, and price limit before signing."
+    },
+    {
+      "selector": "0xf28c0498",
+      "name": "exactOutput(bytes,address,uint256,uint256)",
+      "severity": "high",
+      "code": "UNISWAP_V3_EXACT_OUTPUT_SELECTOR",
+      "category": "swap",
+      "recommendation": "Decode the path bytes and confirm route, recipient, exact output, and maximum input before signing."
+    },
+    {
+      "selector": "0x24856bc3",
+      "name": "Universal Router execute(bytes,bytes[])",
+      "severity": "high",
+      "code": "UNIVERSAL_ROUTER_EXECUTE_SELECTOR",
+      "category": "router",
+      "recommendation": "Decode nested router commands before signing. Router execute calls can bundle swaps, transfers, and approvals."
+    },
+    {
+      "selector": "0x3593564c",
+      "name": "Universal Router execute(bytes,bytes[],uint256)",
+      "severity": "high",
+      "code": "UNIVERSAL_ROUTER_EXECUTE_DEADLINE_SELECTOR",
+      "category": "router",
+      "recommendation": "Decode nested router commands and confirm deadline before signing."
+    },
+    {
+      "selector": "0xd0e30db0",
+      "name": "deposit()",
+      "severity": "medium",
+      "code": "NATIVE_DEPOSIT_SELECTOR",
+      "category": "vault",
+      "recommendation": "Confirm wrapped/native token deposit target and native value before signing."
+    },
+    {
+      "selector": "0xb6b55f25",
+      "name": "deposit(uint256)",
+      "severity": "medium",
+      "code": "VAULT_DEPOSIT_SELECTOR",
+      "category": "vault",
+      "recommendation": "Confirm vault contract, input token, amount, and policy limits before signing."
+    },
+    {
+      "selector": "0x6e553f65",
+      "name": "deposit(uint256,address)",
+      "severity": "medium",
+      "code": "ERC4626_DEPOSIT_SELECTOR",
+      "category": "vault",
+      "recommendation": "Confirm vault contract, assets amount, receiver, and expected shares before signing."
+    },
+    {
+      "selector": "0x2e1a7d4d",
+      "name": "withdraw(uint256)",
+      "severity": "medium",
+      "code": "VAULT_WITHDRAW_SELECTOR",
+      "category": "vault",
+      "recommendation": "Confirm withdrawal amount, recipient behavior, and any unstaking delay before signing."
+    },
+    {
+      "selector": "0xb460af94",
+      "name": "withdraw(uint256,address,address)",
+      "severity": "medium",
+      "code": "ERC4626_WITHDRAW_SELECTOR",
+      "category": "vault",
+      "recommendation": "Confirm assets amount, receiver, owner, and vault policy before signing."
+    },
+    {
+      "selector": "0xba087652",
+      "name": "redeem(uint256,address,address)",
+      "severity": "medium",
+      "code": "ERC4626_REDEEM_SELECTOR",
+      "category": "vault",
+      "recommendation": "Confirm shares amount, receiver, owner, and expected asset output before signing."
+    },
+    {
+      "selector": "0xa694fc3a",
+      "name": "stake(uint256)",
+      "severity": "medium",
+      "code": "STAKE_SELECTOR",
+      "category": "staking",
+      "recommendation": "Confirm staking contract, token, amount, lockup, and unstaking conditions before signing."
+    },
+    {
+      "selector": "0x3d18b912",
+      "name": "getReward()",
+      "severity": "medium",
+      "code": "GET_REWARD_SELECTOR",
+      "category": "rewards",
+      "recommendation": "Confirm reward contract and that the call is claim-only before signing."
+    },
+    {
+      "selector": "0x4e71d92d",
+      "name": "claim()",
+      "severity": "medium",
+      "code": "CLAIM_SELECTOR",
+      "category": "rewards",
+      "recommendation": "Confirm claim contract and that no unexpected value or approval is attached."
+    },
+    {
+      "selector": "0x617ba037",
+      "name": "supply(address,uint256,address,uint16)",
+      "severity": "medium",
+      "code": "LENDING_SUPPLY_SELECTOR",
+      "category": "lending",
+      "recommendation": "Confirm asset, amount, onBehalfOf address, referral code, and protocol target before signing."
+    },
+    {
+      "selector": "0x69328dec",
+      "name": "withdraw(address,uint256,address)",
+      "severity": "medium",
+      "code": "LENDING_WITHDRAW_SELECTOR",
+      "category": "lending",
+      "recommendation": "Confirm asset, amount, recipient, and protocol target before signing."
+    },
+    {
+      "selector": "0xa415bcad",
+      "name": "borrow(address,uint256,uint256,uint16,address)",
+      "severity": "high",
+      "code": "LENDING_BORROW_SELECTOR",
+      "category": "lending",
+      "recommendation": "Confirm borrowed asset, amount, rate mode, onBehalfOf address, collateral impact, and liquidation risk before signing."
+    },
+    {
+      "selector": "0x573ade81",
+      "name": "repay(address,uint256,uint256,address)",
+      "severity": "medium",
+      "code": "LENDING_REPAY_SELECTOR",
+      "category": "lending",
+      "recommendation": "Confirm repayment asset, amount, rate mode, and beneficiary address before signing."
+    }
+  ]
+}

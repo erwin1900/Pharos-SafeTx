@@ -1,0 +1,32 @@
+{
+  "name": "pharos-safetx",
+  "version": "0.1.0",
+  "description": "AI x RealFi pre-signing transaction firewall Skill for AI agents on Pharos.",
+  "type": "module",
+  "bin": {
+    "pharos-safetx": "./src/cli.js"
+  },
+  "scripts": {
+    "analyze": "node src/cli.js analyze",
+    "init": "node src/cli.js init",
+    "demo:skill": "node scripts/demo-skill-scenario.js",
+    "demo:txbuilder": "node scripts/demo-txbuilder-simulation.js",
+    "http": "node adapters/http-server.js",
+    "mcp": "node src/mcp-server.js",
+    "prereq": "node scripts/check-prereqs.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "pharos",
+    "realfi",
+    "ai-agent",
+    "mcp",
+    "web3",
+    "transaction-security",
+    "skill"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
