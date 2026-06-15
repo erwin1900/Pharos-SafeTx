@@ -1,7 +1,7 @@
 {
   "name": "pharos-safetx",
   "version": "0.1.0",
-  "description": "Portable AI x RealFi pre-signing transaction firewall Skill for AI agents before signing Pharos/EVM transactions.",
+  "description": "Portable AI x RealFi transaction payload-review firewall Skill for AI agents before wallet handoff.",
   "license": "MIT",
   "runtime": {
     "node": ">=20"
@@ -29,8 +29,8 @@
     }
   },
   "decisions": {
-    "ALLOW": "The agent may proceed if the user session permits autonomous signing.",
+    "ALLOW": "The agent may proceed if the user session permits autonomous wallet handoff.",
     "WARN": "The agent should pause and ask the user for explicit confirmation.",
-    "BLOCK": "The agent must not sign or submit the transaction."
+    "BLOCK": "The agent must not continue wallet handoff for the transaction."
   }
 }

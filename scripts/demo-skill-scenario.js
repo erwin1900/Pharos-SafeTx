@@ -51,8 +51,8 @@ function renderSafetyReport(input, analysis, source) {
   lines.push("## Safer Alternative", "", analysis.safer_alternative, "", "## Skill Test Result", "");
   lines.push(
     analysis.decision === "BLOCK"
-      ? "PASS: SafeTx prevented the agent from signing a risky transaction."
-      : "PASS: SafeTx produced a structured pre-signing decision."
+      ? "PASS: SafeTx prevented the agent from handing off a risky transaction."
+      : "PASS: SafeTx produced a structured pre-wallet-review decision."
   );
 
   return `${lines.join("\n")}\n`;

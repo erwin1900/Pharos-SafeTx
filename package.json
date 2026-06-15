@@ -1,7 +1,7 @@
 {
   "name": "pharos-safetx",
   "version": "0.1.0",
-  "description": "AI x RealFi pre-signing transaction firewall Skill for AI agents on Pharos.",
+  "description": "AI x RealFi transaction payload-review firewall Skill for AI agents on Pharos.",
   "type": "module",
   "bin": {
     "pharos-safetx": "./src/cli.js"

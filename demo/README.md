@@ -5,7 +5,7 @@ This is a 90-second demo flow for DoraHacks or a short screen recording.
 ## Scene 1: Hook
 
 AI agents can build transactions and move value, but they need a final safety
-check before signing. SafeTx asks one question:
+check before wallet handoff. SafeTx asks one question:
 
 > Does this exact transaction match what the user asked the agent to do?
 
@@ -17,7 +17,7 @@ Show the scenario:
 User: Swap 10 USDC to PHRS on Pharos.
 ```
 
-Then show the transaction an agent is about to sign:
+Then show the transaction payload an agent is about to hand off:
 
 ```bash
 npm run demo:skill
@@ -50,7 +50,7 @@ Explain the reasons:
 Show the safer alternative:
 
 ```text
-Do not sign or submit this transaction.
+Do not continue the wallet handoff for this transaction.
 Replace unlimited approval with a limited approval close to 10 USDC for a trusted spender.
 ```
 
@@ -59,7 +59,7 @@ Replace unlimited approval with a limited approval close to 10 USDC for a truste
 The report ends with:
 
 ```text
-PASS: SafeTx prevented the agent from signing a risky transaction.
+PASS: SafeTx prevented the agent from handing off a risky transaction.
 ```
 
 ## Scene 6: Cross-Platform Skill
@@ -72,5 +72,5 @@ npm run analyze -- examples/warn-infinite-approval.json
 
 Close with:
 
-> SafeTx is a transaction pre-signing firewall for AI agents. It works through
+> SafeTx is a transaction payload-review firewall for AI agents. It works through
 > SKILL.md, JSON Schema, and the local CLI.

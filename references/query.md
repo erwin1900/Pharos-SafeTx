@@ -24,7 +24,7 @@ SafeTx as `trustedSpenders`, `blockedAddresses`, or `addressBook`.
 
 ## Transaction Read Spec
 
-To inspect a prepared transaction without signing:
+To inspect a prepared transaction payload without wallet handoff:
 
 ```bash
 npm run analyze -- <request.json>
@@ -52,5 +52,5 @@ Read these fields first:
 
 1. Treat query tasks as read-only.
 2. Do not infer safety from a known token symbol alone.
-3. If a selector is unknown, route to `references/contract.md` before signing.
-4. For final signing decisions, route to `references/transaction.md`.
+3. If a selector is unknown, route to `references/contract.md` before wallet handoff.
+4. For final handoff decisions, route to `references/transaction.md`.

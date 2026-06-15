@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "description": "Pharos network metadata used by Pharos SafeTx. SafeTx is read-only and pre-signing, so RPC fields are informational unless a downstream workflow performs live chain reads.",
+  "description": "Pharos network metadata used by Pharos SafeTx. SafeTx is read-only and reviews payloads before wallet handoff, so RPC fields are informational unless a downstream workflow performs live chain reads.",
   "networks": [
     {
       "name": "pacific-mainnet",

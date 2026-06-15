@@ -41,7 +41,7 @@ test("blocks transfers to a recipient not mentioned in user intent", () => {
   assert.ok(result.findings.some((finding) => finding.code === "INTENT_ADDRESS_MISMATCH"));
 });
 
-test("warns or blocks unknown calls before agent signing", () => {
+test("warns or blocks unknown calls before wallet handoff", () => {
   const result = analyzeTransaction(loadExample("block-unknown-call.json"));
   assert.equal(result.decision, "WARN");
   assert.equal(result.transaction.kind, "unknown_call");
@@ -72,7 +72,7 @@ test("monitors aligned ERC20 transfer methods without blocking", () => {
   assert.ok(result.findings.some((finding) => finding.code === "ERC20_TRANSFER_SELECTOR"));
 });
 
-test("monitors DEX swap execution methods before signing", () => {
+test("monitors DEX swap execution methods before wallet handoff", () => {
   const result = analyzeTransaction({
     ...baseRequest(),
     user_intent: "Swap 10 USDC to PHRS on Pharos",
@@ -260,7 +260,7 @@ test("returns Chinese safety prompts when language is zh", () => {
     result.findings.find((finding) => finding.code === "POLICY_TOKEN_LIMIT_EXCEEDED").message,
     /超过了已配置的单笔策略限额/
   );
-  assert.match(result.agent_action, /不要签名/);
+  assert.match(result.agent_action, /不要继续/);
 });
 
 test("returns bilingual safety prompts when language is bilingual", () => {
@@ -270,8 +270,8 @@ test("returns bilingual safety prompts when language is bilingual", () => {
   const policyFinding = result.findings.find((finding) => finding.code === "POLICY_TOKEN_LIMIT_EXCEEDED");
   assert.match(policyFinding.message, /Transaction token amount exceeds/);
   assert.match(policyFinding.message, /交易代币金额超过/);
-  assert.match(result.agent_action, /Do not sign/);
-  assert.match(result.agent_action, /不要签名/);
+  assert.match(result.agent_action, /Do not continue/);
+  assert.match(result.agent_action, /不要继续/);
 });
 
 function encodeTransfer(recipient, amount) {

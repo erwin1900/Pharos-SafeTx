@@ -28,7 +28,7 @@ assets/risk-selectors.json
 ```
 
 Use this file for monitored RealFi methods that require stronger confirmation
-before an AI agent signs.
+before downstream wallet review.
 
 | Category | Examples |
 | --- | --- |
@@ -50,11 +50,11 @@ If the target contract or calldata selector is unknown:
 
 1. Keep the decision conservative.
 2. Ask the integrating agent for ABI, verified contract metadata, or protocol adapter output.
-3. If signing would move value or grant allowance, prefer `WARN` or `BLOCK`.
+3. If the payload would move value or grant allowance, prefer `WARN` or `BLOCK`.
 4. Never whitelist a contract solely because the user mentioned its name.
 
 ## Deployment / Verification
 
 SafeTx is not a contract deployment Skill. It does not compile, deploy, or verify
 contracts. If another Skill generates a deployment transaction, run that
-transaction through `references/transaction.md` before signing.
+transaction through `references/transaction.md` before wallet handoff.

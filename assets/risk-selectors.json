@@ -9,7 +9,7 @@
       "severity": "low",
       "code": "ERC20_TRANSFER_SELECTOR",
       "category": "payment",
-      "recommendation": "Confirm recipient, token, amount, and policy limits before signing."
+      "recommendation": "Confirm recipient, token, amount, and policy limits before wallet handoff."
     },
     {
       "selector": "0x095ea7b3",
@@ -25,7 +25,7 @@
       "severity": "medium",
       "code": "ERC20_TRANSFER_FROM_SELECTOR",
       "category": "payment",
-      "recommendation": "Confirm owner, recipient, allowance source, and amount before signing."
+      "recommendation": "Confirm owner, recipient, allowance source, and amount before wallet handoff."
     },
     {
       "selector": "0xd505accf",
@@ -33,7 +33,7 @@
       "severity": "high",
       "code": "ERC2612_PERMIT_SELECTOR",
       "category": "approval",
-      "recommendation": "Treat as off-chain approval. Confirm the owner, spender, value, and deadline before signing."
+      "recommendation": "Treat as off-chain approval. Confirm the owner, spender, value, and deadline before wallet handoff."
     },
     {
       "selector": "0x87517c45",
@@ -65,7 +65,7 @@
       "severity": "high",
       "code": "SWAP_EXACT_TOKENS_FOR_TOKENS_SELECTOR",
       "category": "swap",
-      "recommendation": "Confirm router, token path, recipient, amountOutMin, slippage, and deadline before signing."
+      "recommendation": "Confirm router, token path, recipient, amountOutMin, slippage, and deadline before wallet handoff."
     },
     {
       "selector": "0x8803dbee",
@@ -73,7 +73,7 @@
       "severity": "high",
       "code": "SWAP_TOKENS_FOR_EXACT_TOKENS_SELECTOR",
       "category": "swap",
-      "recommendation": "Confirm maximum input, token path, recipient, slippage, and deadline before signing."
+      "recommendation": "Confirm maximum input, token path, recipient, slippage, and deadline before wallet handoff."
     },
     {
       "selector": "0x7ff36ab5",
@@ -81,7 +81,7 @@
       "severity": "high",
       "code": "SWAP_EXACT_ETH_FOR_TOKENS_SELECTOR",
       "category": "swap",
-      "recommendation": "Confirm native value, token path, recipient, amountOutMin, slippage, and deadline before signing."
+      "recommendation": "Confirm native value, token path, recipient, amountOutMin, slippage, and deadline before wallet handoff."
     },
     {
       "selector": "0x18cbafe5",
@@ -89,7 +89,7 @@
       "severity": "high",
       "code": "SWAP_EXACT_TOKENS_FOR_ETH_SELECTOR",
       "category": "swap",
-      "recommendation": "Confirm token input, PHRS output path, recipient, amountOutMin, slippage, and deadline before signing."
+      "recommendation": "Confirm token input, PHRS output path, recipient, amountOutMin, slippage, and deadline before wallet handoff."
     },
     {
       "selector": "0x4a25d94a",
@@ -97,7 +97,7 @@
       "severity": "high",
       "code": "SWAP_TOKENS_FOR_EXACT_ETH_SELECTOR",
       "category": "swap",
-      "recommendation": "Confirm maximum token input, native output target, recipient, slippage, and deadline before signing."
+      "recommendation": "Confirm maximum token input, native output target, recipient, slippage, and deadline before wallet handoff."
     },
     {
       "selector": "0xfb3bdb41",
@@ -105,7 +105,7 @@
       "severity": "high",
       "code": "SWAP_ETH_FOR_EXACT_TOKENS_SELECTOR",
       "category": "swap",
-      "recommendation": "Confirm native value, exact output target, token path, recipient, and deadline before signing."
+      "recommendation": "Confirm native value, exact output target, token path, recipient, and deadline before wallet handoff."
     },
     {
       "selector": "0x414bf389",
@@ -113,7 +113,7 @@
       "severity": "high",
       "code": "UNISWAP_V3_EXACT_INPUT_SINGLE_SELECTOR",
       "category": "swap",
-      "recommendation": "Confirm tokenIn, tokenOut, fee tier, recipient, amountIn, amountOutMinimum, and sqrtPriceLimit before signing."
+      "recommendation": "Confirm tokenIn, tokenOut, fee tier, recipient, amountIn, amountOutMinimum, and sqrtPriceLimit before wallet handoff."
     },
     {
       "selector": "0xc04b8d59",
@@ -121,7 +121,7 @@
       "severity": "high",
       "code": "UNISWAP_V3_EXACT_INPUT_SELECTOR",
       "category": "swap",
-      "recommendation": "Decode the path bytes and confirm route, recipient, amountIn, and amountOutMinimum before signing."
+      "recommendation": "Decode the path bytes and confirm route, recipient, amountIn, and amountOutMinimum before wallet handoff."
     },
     {
       "selector": "0xdb3e2198",
@@ -129,7 +129,7 @@
       "severity": "high",
       "code": "UNISWAP_V3_EXACT_OUTPUT_SINGLE_SELECTOR",
       "category": "swap",
-      "recommendation": "Confirm tokenIn, tokenOut, fee tier, recipient, exact output, maximum input, and price limit before signing."
+      "recommendation": "Confirm tokenIn, tokenOut, fee tier, recipient, exact output, maximum input, and price limit before wallet handoff."
     },
     {
       "selector": "0xf28c0498",
@@ -137,7 +137,7 @@
       "severity": "high",
       "code": "UNISWAP_V3_EXACT_OUTPUT_SELECTOR",
       "category": "swap",
-      "recommendation": "Decode the path bytes and confirm route, recipient, exact output, and maximum input before signing."
+      "recommendation": "Decode the path bytes and confirm route, recipient, exact output, and maximum input before wallet handoff."
     },
     {
       "selector": "0x24856bc3",
@@ -145,7 +145,7 @@
       "severity": "high",
       "code": "UNIVERSAL_ROUTER_EXECUTE_SELECTOR",
       "category": "router",
-      "recommendation": "Decode nested router commands before signing. Router execute calls can bundle swaps, transfers, and approvals."
+      "recommendation": "Decode nested router commands before wallet handoff. Router execute calls can bundle swaps, transfers, and approvals."
     },
     {
       "selector": "0x3593564c",
@@ -153,7 +153,7 @@
       "severity": "high",
       "code": "UNIVERSAL_ROUTER_EXECUTE_DEADLINE_SELECTOR",
       "category": "router",
-      "recommendation": "Decode nested router commands and confirm deadline before signing."
+      "recommendation": "Decode nested router commands and confirm deadline before wallet handoff."
     },
     {
       "selector": "0xd0e30db0",
@@ -161,7 +161,7 @@
       "severity": "medium",
       "code": "NATIVE_DEPOSIT_SELECTOR",
       "category": "vault",
-      "recommendation": "Confirm wrapped/native token deposit target and native value before signing."
+      "recommendation": "Confirm wrapped/native token deposit target and native value before wallet handoff."
     },
     {
       "selector": "0xb6b55f25",
@@ -169,7 +169,7 @@
       "severity": "medium",
       "code": "VAULT_DEPOSIT_SELECTOR",
       "category": "vault",
-      "recommendation": "Confirm vault contract, input token, amount, and policy limits before signing."
+      "recommendation": "Confirm vault contract, input token, amount, and policy limits before wallet handoff."
     },
     {
       "selector": "0x6e553f65",
@@ -177,7 +177,7 @@
       "severity": "medium",
       "code": "ERC4626_DEPOSIT_SELECTOR",
       "category": "vault",
-      "recommendation": "Confirm vault contract, assets amount, receiver, and expected shares before signing."
+      "recommendation": "Confirm vault contract, assets amount, receiver, and expected shares before wallet handoff."
     },
     {
       "selector": "0x2e1a7d4d",
@@ -185,7 +185,7 @@
       "severity": "medium",
       "code": "VAULT_WITHDRAW_SELECTOR",
       "category": "vault",
-      "recommendation": "Confirm withdrawal amount, recipient behavior, and any unstaking delay before signing."
+      "recommendation": "Confirm withdrawal amount, recipient behavior, and any unstaking delay before wallet handoff."
     },
     {
       "selector": "0xb460af94",
@@ -193,7 +193,7 @@
       "severity": "medium",
       "code": "ERC4626_WITHDRAW_SELECTOR",
       "category": "vault",
-      "recommendation": "Confirm assets amount, receiver, owner, and vault policy before signing."
+      "recommendation": "Confirm assets amount, receiver, owner, and vault policy before wallet handoff."
     },
     {
       "selector": "0xba087652",
@@ -201,7 +201,7 @@
       "severity": "medium",
       "code": "ERC4626_REDEEM_SELECTOR",
       "category": "vault",
-      "recommendation": "Confirm shares amount, receiver, owner, and expected asset output before signing."
+      "recommendation": "Confirm shares amount, receiver, owner, and expected asset output before wallet handoff."
     },
     {
       "selector": "0xa694fc3a",
@@ -209,7 +209,7 @@
       "severity": "medium",
       "code": "STAKE_SELECTOR",
       "category": "staking",
-      "recommendation": "Confirm staking contract, token, amount, lockup, and unstaking conditions before signing."
+      "recommendation": "Confirm staking contract, token, amount, lockup, and unstaking conditions before wallet handoff."
     },
     {
       "selector": "0x3d18b912",
@@ -217,7 +217,7 @@
       "severity": "medium",
       "code": "GET_REWARD_SELECTOR",
       "category": "rewards",
-      "recommendation": "Confirm reward contract and that the call is claim-only before signing."
+      "recommendation": "Confirm reward contract and that the call is claim-only before wallet handoff."
     },
     {
       "selector": "0x4e71d92d",
@@ -233,7 +233,7 @@
       "severity": "medium",
       "code": "LENDING_SUPPLY_SELECTOR",
       "category": "lending",
-      "recommendation": "Confirm asset, amount, onBehalfOf address, referral code, and protocol target before signing."
+      "recommendation": "Confirm asset, amount, onBehalfOf address, referral code, and protocol target before wallet handoff."
     },
     {
       "selector": "0x69328dec",
@@ -241,7 +241,7 @@
       "severity": "medium",
       "code": "LENDING_WITHDRAW_SELECTOR",
       "category": "lending",
-      "recommendation": "Confirm asset, amount, recipient, and protocol target before signing."
+      "recommendation": "Confirm asset, amount, recipient, and protocol target before wallet handoff."
     },
     {
       "selector": "0xa415bcad",
@@ -249,7 +249,7 @@
       "severity": "high",
       "code": "LENDING_BORROW_SELECTOR",
       "category": "lending",
-      "recommendation": "Confirm borrowed asset, amount, rate mode, onBehalfOf address, collateral impact, and liquidation risk before signing."
+      "recommendation": "Confirm borrowed asset, amount, rate mode, onBehalfOf address, collateral impact, and liquidation risk before wallet handoff."
     },
     {
       "selector": "0x573ade81",
@@ -257,7 +257,7 @@
       "severity": "medium",
       "code": "LENDING_REPAY_SELECTOR",
       "category": "lending",
-      "recommendation": "Confirm repayment asset, amount, rate mode, and beneficiary address before signing."
+      "recommendation": "Confirm repayment asset, amount, rate mode, and beneficiary address before wallet handoff."
     }
   ]
 }

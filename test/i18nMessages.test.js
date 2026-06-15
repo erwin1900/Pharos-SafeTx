@@ -31,8 +31,8 @@ function sampleResultFor(code) {
       }
     ],
     reasons: [`English message for ${code}`],
-    agent_action: "Do not sign or submit this transaction.",
-    safer_alternative: "Regenerate the transaction from the original user intent and re-run SafeTx before signing."
+    agent_action: "Do not continue the wallet handoff for this transaction.",
+    safer_alternative: "Regenerate the transaction from the original user intent and re-run SafeTx before wallet handoff."
   };
 }
 

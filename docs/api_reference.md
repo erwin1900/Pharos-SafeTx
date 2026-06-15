@@ -19,7 +19,7 @@ For Pharos Skill Engine-style operation instructions, see
 | ----- | ---- | -------- | ----------- |
 | `user_intent` | string | yes | Natural-language user instruction the agent is trying to satisfy. |
 | `chainId` | number | yes | Target chain id. Current Pharos testnet examples use `688689`. |
-| `from` | string | yes | User or agent wallet address. |
+| `from` | string | yes | User or agent account address. |
 | `to` | string | yes | Transaction target contract or recipient. |
 | `value` | string | no | Native value as hex. Defaults to `0x0`. |
 | `calldata` | string | no | Transaction calldata. Defaults to `0x`. |
@@ -80,7 +80,7 @@ Example:
       "score": 46
     }
   ],
-  "agent_action": "Do not sign or submit this transaction.",
+  "agent_action": "Do not continue the wallet handoff for this transaction.",
   "safer_alternative": "Replace unlimited approval with a limited approval close to 10 USDC for a trusted spender."
 }
 ```
@@ -91,4 +91,4 @@ Example:
 | -------- | -------------- |
 | `ALLOW` | The transaction can proceed if the user session permits autonomous execution. |
 | `WARN` | The agent should pause and ask for explicit user confirmation. |
-| `BLOCK` | The agent must not sign or submit the transaction. |
+| `BLOCK` | The agent must not continue wallet handoff for the transaction. |

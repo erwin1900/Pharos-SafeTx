@@ -29,7 +29,7 @@ npm run analyze -- <request.json>
 
 ## Policy Configuration
 
-Use `policy` when an agent wallet should obey session-level or treasury-level
+Use `policy` when an agent account should obey session-level or treasury-level
 guardrails in addition to user intent checks.
 
 ```json
@@ -61,7 +61,7 @@ guardrails in addition to user intent checks.
 | --- | --- |
 | `ALLOW` | Continue only if the user session permits autonomous execution. |
 | `WARN` | Pause and ask for explicit user confirmation. |
-| `BLOCK` | Stop execution handoff. Regenerate the transaction or use `safer_alternative`. |
+| `BLOCK` | Stop wallet handoff. Regenerate the transaction or use `safer_alternative`. |
 
 ## Language / Prompt Output
 
@@ -79,14 +79,15 @@ Set `language` to control SafeTx user-facing prompts:
 | `zh` or `zh-CN` | Chinese findings, reasons, action, and safer alternative. |
 | `bilingual` | English and Chinese in the same fields. |
 
-## Write Operation Pre-checks
+## Wallet Handoff Pre-checks
 
-Before any downstream execution component receives a transaction:
+Before any downstream wallet or execution component receives a transaction
+payload:
 
 1. Confirm the exact `to`, `value`, and `calldata` match the prepared transaction payload.
 2. Confirm `chainId` matches the user intent and the execution network.
 3. Confirm no secret material or auth token appears in the request JSON.
-4. Run SafeTx immediately before downstream execution handoff.
+4. Run SafeTx immediately before downstream wallet review.
 5. Enforce the returned decision without weakening it.
 
 ## Error Handling
@@ -97,7 +98,7 @@ Before any downstream execution component receives a transaction:
 | `calldata must be valid hex` | Malformed calldata | Rebuild from ABI or transaction builder. |
 | `UNEXPECTED_CHAIN` | Chain id outside configured Pharos networks | Confirm network using `assets/networks.json`. |
 | `INFINITE_APPROVAL` | Max ERC20 allowance | Replace with limited approval. |
-| `UNKNOWN_CALLDATA` | Selector is not decoded | Decode ABI before execution handoff or block. |
+| `UNKNOWN_CALLDATA` | Selector is not decoded | Decode ABI before wallet handoff or block. |
 | `POLICY_TARGET_NOT_ALLOWED` | Transaction target not whitelisted | Add the target to policy or regenerate the transaction. |
 | `POLICY_RECIPIENT_NOT_ALLOWED` | Decoded recipient not whitelisted | Confirm the intended recipient and update policy only if approved. |
 | `POLICY_SPENDER_NOT_ALLOWED` | Approval spender not whitelisted | Use an allowed router/spender or ask for explicit policy update. |
@@ -106,6 +107,8 @@ Before any downstream execution component receives a transaction:
 ## Agent Guidelines
 
 1. Never execute transactions from inside SafeTx.
-2. Show `reasons[]` to the user for `WARN` and `BLOCK`.
-3. Prefer limited approvals over unlimited approvals.
-4. Treat `ALLOW` as a policy result, not a protocol audit guarantee.
+2. SafeTx has no wallet adapter, no secret-material path, no RPC client, and no
+   network-write code.
+3. Show `reasons[]` to the user for `WARN` and `BLOCK`.
+4. Prefer limited approvals over unlimited approvals.
+5. Treat `ALLOW` as a policy result, not a protocol audit guarantee.

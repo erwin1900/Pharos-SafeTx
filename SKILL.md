@@ -8,11 +8,11 @@ description: Use when an AI agent needs an AI x RealFi safety review for propose
 Pharos SafeTx is a portable AI x RealFi transaction-payload safety Skill for AI agents
 on Pharos. It checks whether a proposed EVM transaction matches the user's
 stated financial intent and returns `ALLOW`, `WARN`, or `BLOCK` before any
-downstream execution handoff.
+downstream wallet review.
 
-SafeTx is read-only by design. It only analyzes request JSON and never performs
-wallet operations, network submission, revocation, or on-chain execution. It can
-be consumed through `SKILL.md`, CLI, and JSON Schema interfaces.
+SafeTx is read-only by design. It only analyzes request JSON. It has no wallet
+adapter, no secret-material path, no RPC client, and no network-write code. It
+can be consumed through `SKILL.md`, CLI, and JSON Schema interfaces.
 
 Use SafeTx as the guardrail between AI-generated RealFi intent and the exact
 transaction payload prepared by another system. The Skill reviews decoded
@@ -68,7 +68,7 @@ SafeTx currently supports examples for:
 | "configure whitelist", "enforce transaction limit", "only allow this recipient/spender", "cap USDC transfers" | policy whitelist and transaction limits | `references/transaction.md` |
 | "中文提示", "双语输出", "Chinese output", "bilingual prompts" | localized safety prompt output | `references/transaction.md` |
 | "check my wallet balance", "what network/token metadata should I use?", "explain this previous result" | read-only query and explanation | `references/query.md` |
-| "check this calldata", "is this transaction safe?", "review this payload" | analyze transaction payload before execution handoff | `references/transaction.md` |
+| "check this calldata", "is this transaction safe?", "review this payload" | analyze transaction payload before wallet handoff | `references/transaction.md` |
 | "Why did SafeTx block this?", "explain the risk score", "why is this WARN?" | risk explanation and output parsing | `references/query.md` |
 | "This selector/contract is unknown", "is this ERC20 approval safe?", "review Permit2" | contract and selector review | `references/contract.md` |
 | "Run SafeTx demo", "test skill mode", "show the safety scan report" | demo safety report | `references/safetx.md#run-demo-safety-report` |
@@ -81,7 +81,7 @@ SafeTx currently supports examples for:
 - `WARN`: risk exists. The agent should pause and ask for explicit user
   confirmation.
 - `BLOCK`: critical risk or strong intent mismatch. The agent must stop the
-  downstream execution handoff.
+  downstream wallet handoff.
 
 ## Current Risk Rules
 
@@ -108,16 +108,16 @@ SafeTx currently supports examples for:
 | Request schema | `schemas/safetx-request.schema.json` |
 | Result schema | `schemas/safetx-result.schema.json` |
 
-## Write Operation Pre-Checks
+## Wallet Handoff Pre-Checks
 
 SafeTx itself performs no write operation. If a downstream agent uses SafeTx
-before a real transaction, the agent must still complete its own execution
+before a wallet handoff, the agent must still complete its own review
 pre-checks:
 
 1. Confirm the exact `to`, `value`, and `calldata` match the prepared transaction payload.
 2. Confirm the target chain id matches user intent.
 3. Confirm secrets are never pasted into SafeTx request payloads.
-4. Run SafeTx immediately before downstream execution handoff.
+4. Run SafeTx immediately before downstream wallet review.
 5. Obey the SafeTx decision.
 
 ## General Error Handling
@@ -142,7 +142,9 @@ npm run analyze -- examples/warn-permit2-selector.json
 
 ## Security Reminders
 
-- Never execute transactions or perform network submission from SafeTx.
+- Never perform wallet or network-write operations from SafeTx.
+- SafeTx has no wallet adapter, no secret-material path, no RPC client, and no
+  network-write code.
 - Never put secrets or auth tokens in request JSON.
 - Treat `ALLOW` as a policy decision, not a guarantee that a protocol is safe.
 - Treat `WARN` and `BLOCK` as human-in-the-loop moments.

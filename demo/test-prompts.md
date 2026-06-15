@@ -19,7 +19,7 @@ Expected behavior:
 ## 2. Analyze a safe transfer
 
 ```text
-Use Pharos SafeTx to analyze examples/allow-transfer.json and explain whether the agent should sign it.
+Use Pharos SafeTx to analyze examples/allow-transfer.json and explain whether the agent should continue wallet handoff.
 ```
 
 Expected behavior:
@@ -66,7 +66,7 @@ Expected behavior:
 ## 6. Analyze a pasted transaction object
 
 ```text
-Use Pharos SafeTx to check this transaction before signing:
+Use Pharos SafeTx to check this transaction before wallet handoff:
 {
   "user_intent": "Transfer 100 USDC to 0x2222222222222222222222222222222222222222",
   "chainId": 688689,
@@ -85,4 +85,4 @@ Expected behavior:
 
 - Agent passes the JSON through stdin or a temporary request file
 - Decision is `ALLOW`
-- Agent does not claim to sign or submit anything
+- Agent does not claim to perform wallet actions or submit anything

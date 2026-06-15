@@ -17,8 +17,8 @@ For Pharos Skill Engine-style routing, prefer:
 ### Overview
 
 Analyze a proposed Pharos/EVM transaction against the user's natural-language
-intent and return `ALLOW`, `WARN`, or `BLOCK` before any downstream execution
-handoff.
+intent and return `ALLOW`, `WARN`, or `BLOCK` before any downstream wallet
+review.
 
 ### Command Template
 
@@ -65,15 +65,16 @@ cat <request.json> | node src/cli.js analyze
 | `must be a valid 0x-prefixed EVM address` | Address is malformed | Ask user or upstream agent to provide a valid address. |
 | `calldata must be valid hex` | Calldata is not byte-aligned hex | Rebuild calldata from ABI or transaction builder. |
 | `chainId must be a positive integer` | Missing or invalid chain id | Read `assets/networks.json` and pass the intended Pharos chain id. |
-| `UNKNOWN_CALLDATA` | Selector is not decoded by SafeTx | Treat as warning/blocking signal; decode ABI before execution handoff. |
+| `UNKNOWN_CALLDATA` | Selector is not decoded by SafeTx | Treat as warning/blocking signal; decode ABI before wallet handoff. |
 | `INFINITE_APPROVAL` | Transaction grants max approval | Replace with limited approval matching user intent. |
 
 > **Agent Guidelines**:
-> 1. Run SafeTx immediately before any execution handoff.
+> 1. Run SafeTx immediately before any downstream wallet review.
 > 2. Pass the exact `to`, `value`, and `calldata` from the prepared payload.
 > 3. If `decision = ALLOW`, continue only if the user session permits autonomous execution.
 > 4. If `decision = WARN`, ask for explicit confirmation and show the reasons.
 > 5. If `decision = BLOCK`, stop the handoff. Regenerate the payload or use `safer_alternative`.
+> 6. SafeTx has no wallet adapter, no secret-material path, no RPC client, and no network-write code.
 
 ---
 
@@ -104,7 +105,7 @@ The output must include:
 
 > **Agent Guidelines**:
 > 1. Use this demo to prove the Skill is locally runnable.
-> 2. Summarize the report; do not claim any network submission occurred.
+> 2. Summarize the report; do not claim any wallet or network-write operation occurred.
 > 3. If the demo does not end with `PASS`, inspect `examples/warn-infinite-approval.json` and `src/riskEngine.js`.
 
 ---

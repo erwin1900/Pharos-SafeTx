@@ -4,7 +4,7 @@ export const ZH_MESSAGES = {
   POLICY_TARGET_NOT_ALLOWED: "交易目标不在已配置的目标地址白名单中。",
   POLICY_NATIVE_LIMIT_EXCEEDED: "Native token 转账金额超过了单笔策略限额。",
   INTENT_ACTION_MISMATCH: "用户意图和实际交易动作不一致。",
-  UNCLEAR_USER_INTENT: "用户意图不够明确，不适合自动签名，请先请求用户澄清。",
+  UNCLEAR_USER_INTENT: "用户意图不够明确，不适合自动交给钱包处理，请先请求用户澄清。",
   INTENT_ADDRESS_MISMATCH: "交易目标或收款人均未匹配用户意图中提到的地址。",
   POLICY_RECIPIENT_NOT_ALLOWED: "交易收款人不在已配置的收款人白名单中。",
   INFINITE_APPROVAL: "交易授予无限代币授权，可能导致全部代币余额被转走。",
@@ -15,7 +15,7 @@ export const ZH_MESSAGES = {
   ERC20_TRANSFER_SELECTOR: "ERC20 transfer 会移动代币，请确认收款人、token、金额和策略限额。",
   ERC20_APPROVAL_SELECTOR: "ERC20 approve 会改变代币授权额度，请确认 spender 和金额，优先使用有限授权。",
   ERC20_TRANSFER_FROM_SELECTOR: "ERC20 transferFrom 会基于 allowance 转移代币，请确认 owner、recipient、授权来源和金额。",
-  ERC2612_PERMIT_SELECTOR: "ERC2612 permit 是离线授权签名，请在签名前确认 owner、spender、value 和 deadline。",
+  ERC2612_PERMIT_SELECTOR: "ERC2612 permit 是离线授权 payload，请在交给钱包处理前确认 owner、spender、value 和 deadline。",
   PERMIT2_APPROVE_SELECTOR: "Permit2 approve 是高关注 selector，请核对 token、spender、金额和过期时间。Permit2 授权经常被钓鱼流程滥用。",
   INCREASE_ALLOWANCE_SELECTOR: "increaseAllowance 会增加现有授权额度，请确认这是用户明确要求的操作。",
   NFT_OPERATOR_APPROVAL_SELECTOR: "setApprovalForAll 可能授予某个 operator 控制整组 NFT 的权限，请确认 collection 和 operator。",
@@ -50,9 +50,9 @@ export const ZH_MESSAGES = {
 };
 
 const ZH_ACTIONS = {
-  ALLOW: "如果当前用户会话允许自动执行，则可以继续签名或执行。",
-  WARN: "暂停签名，并在继续前请求用户明确确认。",
-  BLOCK: "不要签名或提交这笔交易。"
+  ALLOW: "如果当前用户会话允许自动处理，则可以继续交给钱包审查。",
+  WARN: "暂停钱包交接，并在继续前请求用户明确确认。",
+  BLOCK: "不要继续将这笔交易交给钱包处理。"
 };
 
 export function normalizeLanguage(language) {
@@ -84,7 +84,7 @@ export function localizeResult(result, language) {
 }
 
 function localizeFinding(finding, mode) {
-  const zh = ZH_MESSAGES[finding.code] || "SafeTx 检测到交易风险，请在签名前人工确认。";
+  const zh = ZH_MESSAGES[finding.code] || "SafeTx 检测到交易风险，请在交给钱包处理前人工确认。";
   return localizeText(finding.message, zh, mode);
 }
 
@@ -102,10 +102,10 @@ function saferAlternativeZh(transaction, intent, decision) {
       : "使用有限授权金额，并在重试前确认 spender 是否可信。";
   }
   if (transaction.kind === "unknown_call") {
-    return "先解码合约 ABI，或通过已验证的 Pharos 协议适配器生成交易后再签名。";
+    return "先解码合约 ABI，或通过已验证的 Pharos 协议适配器生成交易后再交给钱包处理。";
   }
   if (transaction.args?.amount) {
     return "降低交易金额或调整策略限额，然后重新运行 SafeTx。";
   }
-  return "根据原始用户意图重新生成交易，并在签名前重新运行 SafeTx。";
+  return "根据原始用户意图重新生成交易，并在交给钱包处理前重新运行 SafeTx。";
 }

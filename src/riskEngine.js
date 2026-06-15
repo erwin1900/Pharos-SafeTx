@@ -168,7 +168,7 @@ export function analyzeTransaction(request) {
       finding(
         "medium",
         "UNCLEAR_USER_INTENT",
-        "User intent is too vague for autonomous signing; request clarification before execution.",
+        "User intent is too vague for autonomous wallet handoff; request clarification before continuing.",
         18
       )
     );
@@ -337,9 +337,9 @@ function decide(riskScore, findings) {
 }
 
 function agentAction(decision) {
-  if (decision === "ALLOW") return "Proceed with signing or execution if the user session permits autonomous actions.";
-  if (decision === "WARN") return "Pause and ask the user for explicit confirmation before signing.";
-  return "Do not sign or submit this transaction.";
+  if (decision === "ALLOW") return "Proceed with wallet handoff if the user session permits autonomous actions.";
+  if (decision === "WARN") return "Pause and ask the user for explicit confirmation before wallet handoff.";
+  return "Do not continue the wallet handoff for this transaction.";
 }
 
 function saferAlternative(transaction, intent, decision) {
@@ -350,7 +350,7 @@ function saferAlternative(transaction, intent, decision) {
       : "Use a limited approval amount and verify the spender before retrying.";
   }
   if (transaction.kind === "unknown_call") {
-    return "Decode the contract ABI or route the action through a verified Pharos protocol adapter before signing.";
+    return "Decode the contract ABI or route the action through a verified Pharos protocol adapter before wallet handoff.";
   }
-  return "Regenerate the transaction from the original user intent and re-run SafeTx before signing.";
+  return "Regenerate the transaction from the original user intent and re-run SafeTx before wallet handoff.";
 }

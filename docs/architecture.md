@@ -1,9 +1,9 @@
 # Architecture
 
-Pharos SafeTx is intentionally narrow: it sits immediately before transaction
-signing and decides whether an AI agent should proceed with a RealFi action.
-It is the safety layer between AI-generated financial intent and wallet
-execution.
+Pharos SafeTx is intentionally narrow: it sits immediately before downstream
+wallet review and decides whether an AI agent should proceed with a RealFi
+payload handoff. It is the safety layer between AI-generated financial intent
+and wallet-side review.
 
 ```text
 User intent
@@ -21,21 +21,21 @@ Pharos SafeTx Skill
     |-- produce ALLOW / WARN / BLOCK
     |
     v
-Agent signs, asks user, or blocks
+Agent continues, asks user, or blocks
 ```
 
 ## AI x RealFi Positioning
 
-SafeTx assumes AI agents will increasingly execute real financial workflows:
-stablecoin payments, treasury operations, DeFi swaps, vault deposits,
-withdrawals, reward claims, staking, lending, and RWA token movement. The
+SafeTx assumes AI agents will increasingly prepare real financial payloads:
+stablecoin payment intents, treasury operation intents, DeFi swaps, vault
+deposits, withdrawals, reward claims, staking, lending, and RWA token movement. The
 critical failure mode is not only bad code; it is the gap between what the user
-asked for and what the agent is about to sign.
+asked for and the payload the agent is about to hand off.
 
 SafeTx protects that boundary by comparing natural-language intent against the
 exact `to`, `value`, `chainId`, and `calldata` payload. It does not replace a
 wallet, an auditor, or a protocol risk engine. It gives the agent a deterministic
-last-mile decision before signing.
+last-mile decision before downstream wallet review.
 
 ## Modules
 
@@ -46,7 +46,7 @@ last-mile decision before signing.
 | `schemas/` | JSON Schema contracts for request and result payloads. |
 | `SKILL.md` | Pharos Skill Engine-style agent entry point and Capability Index. |
 | `references/query.md` | Read-only explanation, metadata, and output parsing guidance. |
-| `references/transaction.md` | Main pre-signing transaction decision workflow. |
+| `references/transaction.md` | Main pre-wallet-review transaction decision workflow. |
 | `references/contract.md` | ERC20, selector, ABI, and unknown-contract guidance. |
 | `references/safetx.md` | Consolidated operation instructions and demo/interface checks. |
 | `assets/networks.json` | Pharos network metadata. |
@@ -64,7 +64,7 @@ last-mile decision before signing.
 ## Data Flow
 
 1. The user expresses a RealFi intent, such as transferring stablecoins, making a swap, or entering a vault.
-2. The agent or protocol adapter builds the exact transaction it intends to sign.
+2. The agent or protocol adapter builds the exact transaction payload it intends to hand off.
 3. The agent passes that exact transaction to SafeTx.
 4. SafeTx validates the request and normalizes addresses and hex values.
 5. SafeTx parses intent fields such as action, amount, token, and mentioned addresses.
@@ -83,7 +83,7 @@ last-mile decision before signing.
 | `INFINITE_APPROVAL` | Unlimited approvals can drain all token balance. |
 | `UNTRUSTED_SPENDER` | Unknown spenders require confirmation or blocking. |
 | `UNEXPECTED_APPROVAL` | Approvals should be explicit or clearly part of a swap flow. |
-| `UNKNOWN_CALLDATA` | Unknown selectors should not be signed blindly. |
+| `UNKNOWN_CALLDATA` | Unknown selectors should not be handed off blindly. |
 | selector-specific findings | Permit, Permit2, allowance increase, and NFT operator approvals need stronger confirmation. |
 | `UNEXPECTED_NATIVE_VALUE` | Native value transfers need clear authorization. |
 | `AMOUNT_EXCEEDS_INTENT` | Transaction amount should not exceed the user's instruction. |
@@ -102,7 +102,7 @@ last-mile decision before signing.
 | Swap | Whether the transaction is actually a swap-related call or hidden approval risk. |
 | Vault / staking / claim | Known selector handling and unexpected value movement. |
 | Treasury payment | Address drift, amount drift, wrong-chain execution, and blocked targets. |
-| RWA token operation | Unknown selector, target trust, and intent mismatch before signing. |
+| RWA token operation | Unknown selector, target trust, and intent mismatch before wallet review. |
 
 ## Phase 2 Extension Path
 

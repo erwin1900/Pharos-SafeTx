@@ -1,24 +1,25 @@
 # Pharos SafeTx
 
-**A pre-signing transaction safety Skill for AI agents on [Pharos](https://pharosnetwork.xyz).**
+**A pre-wallet-review transaction safety Skill for AI agents on [Pharos](https://pharosnetwork.xyz).**
 
-Give an AI agent transaction-building power without giving it blind signing
-authority. `pharos-safetx` reviews the exact EVM transaction payload an agent is
-about to hand off, compares it with the user's natural-language intent, applies
-policy guardrails, and returns a machine-readable `ALLOW`, `WARN`, or `BLOCK`
-decision.
+Give an AI agent transaction-building power without giving it blind wallet
+handoff authority. `pharos-safetx` reviews the exact EVM transaction payload an
+agent is about to hand off, compares it with the user's natural-language intent,
+applies policy guardrails, and returns a machine-readable `ALLOW`, `WARN`, or
+`BLOCK` decision.
 
-SafeTx is intentionally narrow: it does **not** hold keys, sign transactions,
-broadcast transactions, revoke approvals, or call RPC. It is a local Skill and
-CLI guardrail for the critical moment between "the agent prepared a transaction"
-and "a wallet or downstream system may execute it."
+SafeTx is intentionally narrow: it has **no wallet adapter, no secret-material
+path, no RPC client, and no network-write code**. It only analyzes
+caller-provided JSON payloads. It is a local Skill and CLI guardrail for the
+critical moment between "the agent prepared a transaction payload" and "a wallet
+or downstream system reviews that payload."
 
 Built for the **Pharos Skill-to-Agent Dual Cascade Hackathon (Phase 1)**.
 
 > Pharos is a fully EVM-equivalent L1 for the AI-agent economy. Agentic RealFi
 > needs reusable safety checks before value movement, approvals, swaps, vault
-> flows, and treasury operations. SafeTx provides that last-mile pre-signing
-> review layer.
+> flows, and treasury operations. SafeTx provides that last-mile payload review
+> layer.
 
 ---
 
@@ -33,18 +34,16 @@ Built for the **Pharos Skill-to-Agent Dual Cascade Hackathon (Phase 1)**.
   swaps, vaults, staking, rewards, and lending selectors are monitored through
   data-driven rules.
 - **Local and auditable.** The core runs as a local Node CLI with no runtime npm
-  dependencies, no network calls, and no private-key requirement.
+  dependencies, no network calls, and no secret-material requirement.
 - **Agent-friendly output.** Every result includes `decision`, `risk_score`,
   decoded transaction details, findings, reasons, next action, and safer
   alternative.
-- **Pharos testnet ready.** Examples default to Atlantic Testnet
-  `chainId = 688689` and include current USDC / WPHRS metadata.
 
 ## What It Checks
 
 | Area | Checks |
 | ---- | ------ |
-| Intent parsing | `transfer`, `approve`, `swap`, `stake`, `claim`, `deposit`, `withdraw`, `borrow`, `repay` |
+| AI intent parsing | `transfer`, `approve`, `swap`, `stake`, `claim`, `deposit`, `withdraw`, `borrow`, `repay` |
 | Transaction decoding | native transfer, ERC20 `transfer`, `approve`, `transferFrom`, known high-attention selectors |
 | Address safety | target blocklist, intent address mismatch, policy target / recipient / spender allowlists |
 | Amount safety | decoded ERC20 base units vs user amount, native value limits, token amount limits |
@@ -149,7 +148,7 @@ defaults to `0x`, and `value` defaults to `0x0`.
       "score": 46
     }
   ],
-  "agent_action": "Do not sign or submit this transaction.",
+  "agent_action": "Do not continue the wallet handoff for this transaction.",
   "safer_alternative": "Replace unlimited approval with a limited approval close to 10 USDC for a trusted spender."
 }
 ```
@@ -160,7 +159,7 @@ Decision semantics:
 | -------- | ------- |
 | `ALLOW` | No blocking risk detected. A downstream system may continue only if user/session policy allows it. |
 | `WARN` | Risk exists. Pause and ask the user for explicit confirmation. |
-| `BLOCK` | Critical risk or strong intent mismatch. Do not continue the execution handoff. |
+| `BLOCK` | Critical risk or strong intent mismatch. Do not continue the wallet handoff. |
 
 ## Policy Guardrails
 
@@ -275,13 +274,13 @@ Core modules:
 
 ## Security Notes
 
-- SafeTx never asks for private keys, seed phrases, or auth tokens.
-- SafeTx does not sign, submit, broadcast, revoke, or custody assets.
+- SafeTx never asks for secrets, seed phrases, or auth tokens.
+- SafeTx has no wallet adapter, no secret-material path, no RPC client, and no
+  network-write code.
 - Treat `ALLOW` as a policy result, not a protocol audit guarantee.
 - Unknown calldata should be decoded through ABI or reviewed before any
-  execution handoff.
-- Use dedicated test wallets and low-value testnet assets while integrating
-  agent workflows.
+  downstream wallet review.
+- Use dedicated low-value test accounts while integrating agent workflows.
 
 ## Testing
 
@@ -303,7 +302,7 @@ The test suite covers:
 Current expected result:
 
 ```text
-29 tests, 29 pass
+28 tests, 28 pass
 ```
 
 ## License
